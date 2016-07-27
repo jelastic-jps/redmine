@@ -5,7 +5,7 @@
 		"id": "redmine",
 		"name": "Redmine",
 		"version": "3.2.0",
-		"logo": "https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download",
+		"logo": "https://github.com/jelastic-jps/redmine/raw/master/images/redmine_logo.png",
 		"type": "ruby",
 		"homepage": "http://www.redmine.org/",
 		"categories": ["apps/dev-tools", "apps/dev-and-admin-tools"],
@@ -36,7 +36,7 @@
 				]
 			},
 			"deployments": [{
-					"archive": "https://download.jelastic.com/public.php?service=files&t=9e79ca8d08097bf8473994151e060ee7&download",
+					"archive": "https://github.com/jelastic-jps/redmine/raw/master/dumps/app.zip",
 					"name": "Redmine-3.2.0.zip",
 					"context": "production"
 				}
@@ -46,7 +46,7 @@
 					"database": {
 						"name": "redmine",
 						"user": "redmine",
-						"dump": "https://download.jelastic.com/public.php?service=files&t=c4ede1ce76a3fdc013d2638edd6afd68&download"
+						"dump": "https://github.com/jelastic-jps/redmine/raw/master/dumps/redmine.sql"
 					}
 				}, {
 					"nodeType": "nginx-ruby",
