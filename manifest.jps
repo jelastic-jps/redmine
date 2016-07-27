@@ -1,0 +1,76 @@
+{
+	"jpsVersion": "0.5",
+	"jpsType": "install",
+	"application": {
+		"id": "redmine",
+		"name": "Redmine",
+		"version": "3.2.0",
+		"logo": "https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download",
+		"type": "ruby",
+		"homepage": "http://www.redmine.org/",
+		"categories": ["apps/dev-tools", "apps/dev-and-admin-tools"],
+		"description": {
+			"en": "<p>Redmine is a flexible project management web application written using Ruby on Rails framework</p>",
+			"ru": "<p>Redmine является гибким управлением проектов веб-приложений, написанное с использованием Ruby on Rails</p>"
+		},
+		"success": {
+			"en": "Below you will find your admin panel link, username and password.</br></br> <table style='font-size:13px; border: none;'><tr><td>Admin panel URL:</td><td style='padding-left: 10px;'><a href='${env.protocol}://${env.domain}/' target='_blank'>${env.protocol}://${env.domain}/</a></td></tr> <tr><td>Username:</td><td style='padding-left: 10px;'>admin</td></tr><tr><td>Password:</td><td style='padding-left: 10px;'>admin</td></tr></table></br>To add custom domain name for your Redmine installation follow the steps described in our <a href='http://jelastic.com/docs/custom-domains' target='_blank'>documentation</a>",
+			"ru": "Ниже выс можете найти вашу ссылку на админ панель, имя и пароль.</br></br> <table style='font-size:13px; border: none;'><tr><td>Админ панель URL:</td><td style='padding-left: 10px;'><a href='${env.protocol}://${env.domain}/' target='_blank'>${env.protocol}://${env.domain}/</a></td></tr> <tr><td>Имя:</td><td style='padding-left: 10px;'>admin</td></tr><tr><td>Пароль:</td><td style='padding-left: 10px;'>admin</td></tr></table></br>Для того чтобы добавить пользовательский домен перейдите по ссылке описанной в нашей <a href='http://jelastic.com/docs/custom-domains' target='_blank'>документации</a>"
+		},
+		"env": {
+			"topology": {
+				"ha": false,
+				"engine": "ruby2.0.0",
+				"ssl": false,
+				"nodes": [{
+						"extip": false,
+						"count": 1,
+						"cloudlets": 16,
+						"nodeType": "nginx-ruby"
+					}, {
+						"extip": false,
+						"count": 1,
+						"cloudlets": 16,
+						"nodeType": "mysql5-6"
+					}
+				]
+			},
+			"deployments": [{
+					"archive": "https://download.jelastic.com/public.php?service=files&t=9e79ca8d08097bf8473994151e060ee7&download",
+					"name": "Redmine-3.2.0.zip",
+					"context": "production"
+				}
+			],
+			"configs": [{
+					"nodeType": "mysql5-6",
+					"database": {
+						"name": "redmine",
+						"user": "redmine",
+						"dump": "https://download.jelastic.com/public.php?service=files&t=c4ede1ce76a3fdc013d2638edd6afd68&download"
+					}
+				}, {
+					"nodeType": "nginx-ruby",
+					"restart": true,
+					"path": "/var/www/webroot/ROOT/config/database.yml",
+					"replacements": [{
+							"pattern": "{ENV_URL}",
+							"replacement": "${env.url}"
+						}, {
+							"pattern": "{DB_HOST}",
+							"replacement": "${nodes.mysql5-6.address}"
+						}, {
+							"pattern": "{DB_USER}",
+							"replacement": "${nodes.mysql5-6.database.user}"
+						}, {
+							"pattern": "{DB_PASSWORD}",
+							"replacement": "${nodes.mysql5-6.database.password}"
+						}, {
+							"pattern": "{DB_NAME}",
+							"replacement": "${nodes.mysql5-6.database.name}"
+						}
+					]
+				}
+			]
+		}
+	}
+}
