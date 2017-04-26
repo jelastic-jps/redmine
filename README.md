@@ -27,7 +27,7 @@ Some of the main features of Redmine are:<br/>
 
 ### Environment Topology
 
-![Redmine Topology](https://docs.google.com/drawings/d/1WFAXolYT4jpOXZ1fJZ2UF9TlCUuIqActk-y98J4OxgA/pub?w=505&h=216)
+![redmine-environment-topology](images/redmine-environment-topology.png)
 
 ### Specifics
 
