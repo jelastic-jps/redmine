@@ -1,0 +1,12 @@
+#/bin/bash
+
+MYSQL_PASSWORD=$1
+RAND_PASS=$2
+APP_USER_NAME=$3
+APP_DB_NAME=$3
+DB_SCRIPT_PATH_LOG=/var/log/mysql/createDb.log
+
+mysql -u root -p${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${APP_DB_NAME};"
+mysql -u root -p${MYSQL_PASSWORD} -e "CREATE USER '${APP_USER_NAME}'@'localhost' IDENTIFIED BY '${RAND_PASS}';"
+mysql -u root -p${MYSQL_PASSWORD} -e "CREATE USER '${APP_USER_NAME}'@'%' IDENTIFIED BY '${RAND_PASS}';"
+mysql -u root -p${MYSQL_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${APP_USER_NAME}.* TO '${APP_DB_NAME}'@'%';"
