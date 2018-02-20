@@ -22,6 +22,7 @@
     },
     "env": {
       "topology": {
+        "1engine": "ruby2.2.7",
         "nodes": [
           {
             "cloudlets": 8,
@@ -37,8 +38,8 @@
     "onInstall": [
       {
         "deploy": {
-          "archive": "https://github.com/jelastic-jps/redmine/blob/master/dumps/redmine-3.4.3.zip?raw=true",
-          "name": "Redmine-3.4.3.zip",
+          "archive": "https://github.com/jelastic-jps/redmine/blob/master/dumps/redmine-3.4.4.zip",
+          "name": "Redmine-3.4.4.zip",
           "context": "production"
         }
       },
