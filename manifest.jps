@@ -22,7 +22,6 @@
     },
     "env": {
       "topology": {
-        "1engine": "ruby2.2.7",
         "nodes": [
           {
             "cloudlets": 8,
