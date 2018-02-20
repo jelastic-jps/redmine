@@ -4,7 +4,7 @@
   "application": {
     "id": "redmine",
     "name": "Redmine",
-    "version": "3.4.3",
+    "version": "3.4.4",
     "logo": "https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download",
     "type": "ruby",
     "homepage": "http://www.redmine.org/",
