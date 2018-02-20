@@ -37,7 +37,7 @@
     "onInstall": [
       {
         "deploy": {
-          "archive": "https://github.com/jelastic-jps/redmine/blob/master/dumps/redmine-3.4.4.zip",
+          "archive": "https://github.com/jelastic-jps/redmine/raw/master/dumps/redmine-3.4.4.zip",
           "name": "Redmine-3.4.4.zip",
           "context": "production"
         }
