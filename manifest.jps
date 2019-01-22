@@ -32,9 +32,9 @@ onInstall:
     nodeType: nginx-ruby
     path: /var/www/webroot/ROOT/config/database.yml
     replacements:
-    - pattern: {DB_HOST}
-      replacement: ${nodes.mysql5-6.address}
-    - pattern: {DB_PASSWORD}
+    - pattern: "{DB_HOST}"
+      replacement: ${nodes.sqldb.address}
+    - pattern: "{DB_PASSWORD}"
       replacement: ${user.appPassword}
 - restartNodes:
     nodeGroup: cp
