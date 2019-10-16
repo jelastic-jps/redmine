@@ -21,8 +21,8 @@ env:
     nodeType: mysql5-6
 onInstall:
 - deploy:
-    archive: https://github.com/jelastic-jps/redmine/raw/master/dumps/redmine-3.4.4.zip
-    name: Redmine-3.4.4.zip
+    archive: http://www.redmine.org/releases/redmine-4.0.2.tar.gz
+    name: Redmine-4.0.2.zip
     context: production
 - cmd [sqldb]:
   - curl -fsSL "https://raw.githubusercontent.com/jelastic-jps/redmine/master/scripts/createDb.sh" -o /tmp/createDb.sh
@@ -39,7 +39,12 @@ onInstall:
 - restartNodes:
     nodeGroup: cp
 - cmd [cp]:
+  - echo "gem \"sprockets\", \"~> 3.7.2\"" > /var/www/webroot/ROOT/Gemfile.local
+- restartNodes:
+    nodeGroup: cp
+- cmd [cp]:
   - cd /var/www/webroot/ROOT/
+  - bundle update sprockets
   - rake generate_secret_token
   - RAILS_ENV=production rake db:migrate
   - RAILS_ENV=production REDMINE_LANG=en rake redmine:load_default_data
