@@ -1,56 +1,77 @@
-jpsVersion: 0.5
+version: 0.5
 type: install
 id: redmine
 name: Redmine
-version: 3.4.4
-logo: https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download
 homepage: http://www.redmine.org/
+logo: https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download
+description: Redmine is a flexible project management web application written using Ruby on Rails framework
+
+globals:
+  DB_ADMIN_PASS: "${fn.password}"
+  ADMIN_PASS: "${user.appPassword}"
+
 categories:
   - apps/project-management
-description:
-  en: "<p>Redmine is a flexible project management web application written using Ruby on Rails framework</p>"
-  ru: "<p>Redmine является гибким управлением проектов веб-приложений, написанное с использованием Ruby on Rails</p>"
-success:
-  en: 'Below you will find your admin panel link, username and password.</br></br> <table style=''font-size:13px; border: none;''><tr><td>Admin panel URL:</td><td style=''padding-left: 10px;''><a href=''${env.protocol}://${env.domain}/'' target=''_blank''>${env.protocol}://${env.domain}/</a></td></tr> <tr><td>Username:</td><td style=''padding-left: 10px;''>admin</td></tr><tr><td>Password:</td><td style=''padding-left: 10px;''>${user.appPassword}</td></tr></table></br>To add custom domain name for your Redmine installation follow the steps described in our <a href=''http://jelastic.com/docs/custom-domains'' target=''_blank''>documentation</a>'
-  ru: 'Ниже выс можете найти вашу ссылку на админ панель, имя и пароль.</br></br> <table style=''font-size:13px; border: none;''><tr><td>Админ панель URL:</td><td style=''padding-left: 10px;''><a href=''${env.protocol}://${env.domain}/'' target=''_blank''>${env.protocol}://${env.domain}/</a></td></tr> <tr><td>Имя:</td><td style=''padding-left: 10px;''>admin</td></tr><tr><td>Пароль:</td><td style=''padding-left: 10px;''>${user.appPassword}</td></tr></table></br>Для того чтобы добавить пользовательский домен перейдите по ссылке описанной в нашей <a href=''http://jelastic.com/docs/custom-domains'' target=''_blank''>документации</a>'
-env:
-  nodes:
+
+nodes:
   - cloudlets: 8
     nodeType: nginx-ruby
   - cloudlets: 8
-    nodeType: mysql5-6
+    nodeType: mysql5
+engine: ruby2.6
+
 onInstall:
 - deploy:
-    archive: http://www.redmine.org/releases/redmine-4.0.2.tar.gz
-    name: Redmine-4.0.2.zip
+    archive: https://www.redmine.org/releases/redmine-4.1.0.zip
+    name: Redmine-4.1.0.zip
     context: production
-- cmd [sqldb]:
-  - curl -fsSL "https://raw.githubusercontent.com/jelastic-jps/redmine/master/scripts/createDb.sh" -o /tmp/createDb.sh
-  - "/bin/bash -x /tmp/createDb.sh ${nodes.mysql5-6.password} ${user.appPassword} redmine"
-- cmd [cp]: curl -fsSL "https://raw.githubusercontent.com/jelastic-jps/redmine/master/scripts/database.yml" -o /var/www/webroot/ROOT/config/database.yml
+
+- prepareSqlDatabase:
+    nodeGroup: sqldb
+    loginCredentials:
+      user: root
+      password: "${nodes.sqldb.password}"
+    newDatabaseName: redmine
+    newDatabaseUser:
+      name: redmine
+      password: "${globals.DB_ADMIN_PASS}"
+
+- cmd [cp]: cp /var/www/webroot/ROOT/config/database.yml.example /var/www/webroot/ROOT/config/database.yml
+
 - replaceInFile:
     nodeType: nginx-ruby
     path: /var/www/webroot/ROOT/config/database.yml
     replacements:
-    - pattern: "{DB_HOST}"
-      replacement: ${nodes.sqldb.address}
-    - pattern: "{DB_PASSWORD}"
-      replacement: ${user.appPassword}
+    - pattern: "host: localhost"
+      replacement: "host: ${nodes.sqldb.address}"
+    - pattern: "username: root"
+      replacement: "username: redmine"
+    - pattern: "password: \"\""
+      replacement: "password: ${globals.DB_ADMIN_PASS}"
 - restartNodes:
     nodeGroup: cp
-- cmd [cp]:
-  - echo "gem \"sprockets\", \"~> 3.7.2\"" > /var/www/webroot/ROOT/Gemfile.local
-- restartNodes:
-    nodeGroup: cp
+
 - cmd [cp]:
   - cd /var/www/webroot/ROOT/
-  - bundle update sprockets
-  - rake generate_secret_token
-  - RAILS_ENV=production rake db:migrate
-  - RAILS_ENV=production REDMINE_LANG=en rake redmine:load_default_data
+  - bundle config set without 'development test'
+  - bundle config unset deployment
+  - bundle install
+  - bundle exec rake generate_secret_token
+  - RAILS_ENV=production bundle exec rake db:migrate
+  - RAILS_ENV=production REDMINE_LANG=en bundle exec rake redmine:load_default_data
   - mkdir tmp tmp/pdf public/plugin_assets
   - chmod -R 755 files log tmp public/plugin_assets
+  - chown -R redmine:redmine files log tmp public/plugin_assets
   - curl -fsSL "https://raw.githubusercontent.com/jelastic-jps/redmine/master/scripts/setPassword.sh" -o /tmp/setPassword.sh
-  - "/bin/bash -x /tmp/setPassword.sh ${user.appPassword}"
+  - /bin/bash -x /tmp/setPassword.sh ${globals.ADMIN_PASS}
 - restartNodes:
     nodeGroup: cp
+
+success: |
+  Below you will find your admin panel link, username and password.  
+  
+  Admin panel URL: [${env.protocol}://${env.domain}/](${env.protocol}://${env.domain}/)  
+  Username: admin  
+  Password: ${user.appPassword}  
+  
+  To add custom domain name for your Redmine installation follow the steps described in our [documentation](http://jelastic.com/docs/custom-domains)
