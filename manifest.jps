@@ -53,6 +53,7 @@ onInstall:
 
 - cmd [cp]:
   - cd /var/www/webroot/ROOT/
+  - rm -rf .bundle
   - bundle config set without 'development test'
   - bundle config unset deployment
   - bundle install
