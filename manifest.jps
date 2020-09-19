@@ -10,6 +10,9 @@ globals:
   DB_ADMIN_PASS: "${fn.password}"
   ADMIN_PASS: "${user.appPassword}"
 
+mixins:
+  - configs/vers.yaml
+
 categories:
   - apps/project-management
 
@@ -22,8 +25,8 @@ engine: ruby2.6
 
 onInstall:
 - deploy:
-    archive: https://www.redmine.org/releases/redmine-4.1.0.zip
-    name: Redmine-4.1.0.zip
+    archive: https://www.redmine.org/releases/redmine-${globals.version_redmine}.zip
+    name: Redmine-${globals.version_redmine}.zip
     context: production
 
 - prepareSqlDatabase:
