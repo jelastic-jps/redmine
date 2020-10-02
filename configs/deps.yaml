@@ -1,12 +1,5 @@
-tags:
+templates:
   mysql:
-    mysql5:
-      digest: sha256:f958cb2a2579308a5031383acfa77dce6e697669dcaa86bc100a409fe597613e
-      version: 5.7.31
-    mysql8:
-      digest: sha256:51264966b815442ac0af2f99a155e05d9594e52bc8bf4193ba2143fb86a99a1e
-      version: 8.0.21
+    - ^mysql5$
   nginxruby:
-    nginxruby:
-      digest: sha256:a92af0fced55421fe7073e60b739aa3b7d7b763632ac3abd194f0c1640f70a0f
-      version: 1.18.0-ruby-2.7.1
+    - ^nginxruby
