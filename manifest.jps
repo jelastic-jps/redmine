@@ -3,12 +3,16 @@ type: install
 id: redmine
 name: Redmine
 homepage: http://www.redmine.org/
-logo: https://download.jelastic.com/public.php?service=files&t=d513ad3de9b012587b3e91f2471a679a&download
+logo: images/redmine_logo.png
 description: Redmine is a flexible project management web application written using Ruby on Rails framework
 
 globals:
   DB_ADMIN_PASS: "${fn.password}"
   ADMIN_PASS: "${user.appPassword}"
+
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/redmine/master/
+mixins:
+  - configs/vers.yaml
 
 categories:
   - apps/project-management
@@ -22,8 +26,8 @@ engine: ruby2.6
 
 onInstall:
 - deploy:
-    archive: https://www.redmine.org/releases/redmine-4.1.0.zip
-    name: Redmine-4.1.0.zip
+    archive: https://www.redmine.org/releases/redmine-${globals.version_redmine}.zip
+    name: Redmine-${globals.version_redmine}.zip
     context: production
 
 - prepareSqlDatabase:
