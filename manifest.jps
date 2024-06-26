@@ -23,7 +23,7 @@ nodes:
   - cloudlets: 8
     nodeType: mysql5
 engine: ruby3.2
-
+  
 onInstall:
 - deploy:
     archive: https://www.redmine.org/releases/redmine-${globals.version_redmine}.zip
