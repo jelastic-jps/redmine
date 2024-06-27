@@ -22,8 +22,8 @@ nodes:
     nodeType: nginx-ruby
   - cloudlets: 8
     nodeType: mysql5
-engine: ruby3.1
-
+engine: ruby3.2
+  
 onInstall:
 - deploy:
     archive: https://www.redmine.org/releases/redmine-${globals.version_redmine}.zip
@@ -56,17 +56,18 @@ onInstall:
     nodeGroup: cp
 
 - cmd [cp]:
+  - echo $RUBY_VERSION >/var/www/webroot/ROOT/.ruby-version
   - cd /var/www/webroot/ROOT/
   - rm -rf .bundle
   - bundle config set without 'development test'
   - bundle config unset deployment
+  - echo "gem 'blankslate'" >Gemfile.local
   - bundle install
   - bundle exec rake generate_secret_token
   - RAILS_ENV=production bundle exec rake db:migrate
   - RAILS_ENV=production REDMINE_LANG=en bundle exec rake redmine:load_default_data
-  - mkdir tmp tmp/pdf public/plugin_assets
+  - mkdir -p tmp tmp/pdf public/plugin_assets
   - chmod -R 755 files log tmp public/plugin_assets
-  - chown -R redmine:redmine files log tmp public/plugin_assets
   - curl -fsSL "https://raw.githubusercontent.com/jelastic-jps/redmine/master/scripts/setPassword.sh" -o /tmp/setPassword.sh
   - /bin/bash -x /tmp/setPassword.sh ${globals.ADMIN_PASS}
 - restartNodes:
