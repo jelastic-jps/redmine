@@ -1,5 +1,5 @@
 templates:
   mysql:
-    - ^mysql5$
+    - ^mysql8$
   nginxruby:
     - ^nginxruby
