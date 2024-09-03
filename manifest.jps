@@ -21,7 +21,7 @@ nodes:
   - cloudlets: 8
     nodeType: nginx-ruby
   - cloudlets: 8
-    nodeType: mysql5
+    nodeType: mysql8
 engine: ruby3.2
   
 onInstall:
