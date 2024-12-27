@@ -4,7 +4,7 @@
 
 ## Redmine
 
-The package deploys the [Redmine](https://www.redmine.org/) solution - an open-source, cross-platform and cross-database compatible project manager built using the Ruby on Rails framework.
+The package deploys the [Redmine](https://www.redmine.org/) solution - an open-source, cross-platform, and cross-database compatible project manager built using the Ruby on Rails framework.
 
 ## Environment Topology
 
