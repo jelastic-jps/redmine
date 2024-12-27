@@ -14,8 +14,6 @@ This package creates a dedicated Redmine environment that contains one applicati
 - MySQL 8 database
 - Redmine 5.1.3
 
-![Redmine environment topology](images/redmine-environment-topology.png)
-
 
 ## Deployment to Cloud
 

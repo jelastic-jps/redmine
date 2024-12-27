@@ -69,7 +69,7 @@ onInstall:
     nodeGroup: cp
 
 success: |
-  Use the following credentials to access the osTicket admin panel:
+  Use the following credentials to access the Redmine admin panel:
   
   **Admin panel URL:** [${env.protocol}://${env.domain}/](${env.protocol}://${env.domain}/)  
   **Admin name:** admin  
