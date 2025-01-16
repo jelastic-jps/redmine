@@ -2,9 +2,9 @@ version: 1.7
 type: install
 id: redmine
 name: Redmine
-homepage: http://www.redmine.org/
+homepage: https://www.redmine.org/
 logo: images/redmine_logo.png
-description: Redmine is a flexible project management web application written using Ruby on Rails framework
+description: Redmine is a flexible project manager web application that is written using the Ruby on Rails framework.
 
 globals:
   DB_ADMIN_PASS: "${fn.password(10)}"
@@ -69,10 +69,10 @@ onInstall:
     nodeGroup: cp
 
 success: |
-  Below you will find your admin panel link, username and password.  
+  Use the following credentials to access the Redmine admin panel:
   
-  Admin panel URL: [${env.protocol}://${env.domain}/](${env.protocol}://${env.domain}/)  
-  Username: admin  
-  Password: ${user.appPassword}  
-  
-  To add custom domain name for your Redmine installation follow the steps described in our [documentation](http://jelastic.com/docs/custom-domains)
+  **Admin panel URL:** [${env.protocol}://${env.domain}/](${env.protocol}://${env.domain}/)  
+  **Admin name:** admin  
+  **Admin password:** ${user.appPassword}
+
+  To add a custom domain name for your Redmine installation, follow the steps described in our [documentation](https://www.virtuozzo.com/application-platform-docs/custom-domains/).

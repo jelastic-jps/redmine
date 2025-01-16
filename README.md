@@ -1,56 +1,33 @@
-[![Redmine](images/logo-redmine.png)](../../../redmine)
+<p align="center"> 
+<img src="images/redmine_logo.png" alt="Redmine">
+</p>
+
 ## Redmine
 
-The JPS package deploys [Redmine](http://www.redmine.org/) that initially contains 1 application server and 1 database container.
+The package deploys the [Redmine](https://www.redmine.org/) solution - an open-source, cross-platform, and cross-database compatible project manager built using the Ruby on Rails framework.
 
-### Highlights
-This package is designed to deploy Redmine environment is a flexible project management web application. Written using the Ruby on Rails framework, it is cross-platform and cross-database.<br />
-Some of the main features of Redmine are:<br/>
+## Environment Topology
 
-- Multiple projects support
-- Flexible role based access control
-- Flexible issue tracking system
-- Flexible issue tracking system
-- Gantt chart and calendar
-- News, documents & files management
-- Feeds & email notifications
-- Per project wiki
-- Per project forums
-- Time tracking
-- Custom fields for issues, time-entries, projects and users
-- SCM integration (SVN, CVS, Git, Mercurial, Bazaar and Darcs)
-- Issue creation via email
-- Multiple LDAP authentication support
-- User self-registration support
-- Multilanguage support
-- Multiple databases support
+This package creates a dedicated Redmine environment that contains one application server and one database container. It automatically deploys and sets the Redmine application. The automatic vertical scaling is enabled out of the box, and [horizontal scaling](https://www.virtuozzo.com/application-platform-docs/automatic-horizontal-scaling/) can be configured (if needed). The default software stacks utilized in the package are the following:
 
-### Environment Topology
+- NGINX Ruby application server (Ruby 3.2)
+- MySQL 8 database
+- Redmine 5.1.3
 
-![redmine-environment-topology](images/redmine-environment-topology.png)
 
-### Specifics
+## Deployment to Cloud
 
-Layer                |     Server    | Number of CTs <br/> by default | Cloudlets per CT <br/> (reserved/dynamic) | Options
--------------------- | --------------| :----------------------------: | :---------------------------------------: | :-----:
-AS                   | NGINX RUBY |       1                        |           1 / 16                          | -
-DB                   |    MySQL      |       1                        |           1 / 16                           | -
+To get your Redmine solution, click the "**Deploy to Cloud**" button below, specify your email address within the widget, choose one of the [Virtuozzo Public Cloud Providers](https://www.virtuozzo.com/application-platform-partners/), and confirm by clicking **Install**.
 
-* AS - Application server 
-* DB - Database 
-* CT - Container
+[![Deploy to Cloud](https://raw.githubusercontent.com/jelastic-jps/common/main/images/deploy-to-cloud.png)](https://www.virtuozzo.com/install/?manifest=https://raw.githubusercontent.com/jelastic-jps/redmine/refs/heads/master/manifest.jps)
 
-**Redmine Version**: 3.2.0.devel<br/>
-**Ruby Engine**: 2.0.0-p643<br/>
-**Ruby on Rails Engine**: 4.2.5<br/>
-**MySQL Database**: 5.6.29
+> If you already have a Virtuozzo Application Platform (VAP) account, you can deploy this solution from the [Marketplace](https://www.virtuozzo.com/application-platform-docs/marketplace/) or [import](https://www.virtuozzo.com/application-platform-docs/environment-import/) a manifest file from this repository.
 
-### Deployment
 
-In order to get this solution instantly deployed, click the "Get It Hosted Now" button, specify your email address within the widget, choose one of the [Jelastic Public Cloud providers](https://jelastic.cloud) and press Install.
+## Installation Process
 
-[![GET IT HOSTED](https://raw.githubusercontent.com/jelastic-jps/jpswiki/master/images/getithosted.png)](https://jelastic.com/install-application/?manifest=https%3A%2F%2Fgithub.com%2Fjelastic-jps%2Fredmine%2Fraw%2Fmaster%2Fmanifest.jps)
+In the opened installation window at the VAP dashboard, provide a preferred environment and display names, choose a region (if available), and confirm the installation.
 
-To deploy this package to Jelastic Private Cloud, import [this JPS manifest](../../raw/master/manifest.jps) within your dashboard ([detailed instruction](https://docs.jelastic.com/environment-export-import#import)).
+![Redmine deployment wizard](images/redmine-deployment-wizard.png)
 
-More information about Jelastic JPS package and about installation widget for your website can be found in the [Jelastic JPS Application Package](https://github.com/jelastic-jps/jpswiki/wiki/Jelastic-JPS-Application-Package) reference.
+Your Redmine application will be automatically installed in a few minutes.
