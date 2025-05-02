@@ -17,6 +17,8 @@ mixins:
 categories:
   - apps/project-management
 
+ssl: true
+skipNodeEmails: true
 nodes:
   - cloudlets: 8
     nodeType: nginx-ruby
